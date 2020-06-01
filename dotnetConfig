@@ -1,0 +1,12 @@
+After downloading Dotnet Core 3.1 > lastest version we need to put this line with the respective version of dotnet:
+
+we type: sudo nano -/.bashrc
+
+# DOTNET - Required
+export PATH="$PATH:/home/arielreyesflores/.dotnet/tools";
+# DOTNET - Optional
+export DOTNET_CLI_TELEMETRY_OPTOUT=1;
+export ASPNETCORE_ENVIRONMENT=Development;
+export MSBuildSDKsPath="/usr/share/dotnet/sdk/3.1.103/Sdks";
+export DOTNET_ROOT=$HOME/dotnet
+export PATH=$PATH:$HOME/dotnet
