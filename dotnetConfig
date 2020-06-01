@@ -10,3 +10,6 @@ export ASPNETCORE_ENVIRONMENT=Development;
 export MSBuildSDKsPath="/usr/share/dotnet/sdk/3.1.103/Sdks";
 export DOTNET_ROOT=$HOME/dotnet
 export PATH=$PATH:$HOME/dotnet
+
+
+https://github.com/dotnet/runtime/issues/31037
