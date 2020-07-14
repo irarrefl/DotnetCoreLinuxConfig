@@ -1,0 +1,454 @@
+#tarea de ingresar alumno de ingresar clientes 
+#Se quiere diseñar una base de datos que almaene info relativa a los zoos existentes en el mundo, asi 
+#Asi como las especies de animales que estos alvergan de cada zoo se conoce el nombre, ciudad, pais donde se encuentra
+#, tamaño zoo en metros cuadrados y presupuesto anual.
+#Cada especie se almacena su nombre vulgar y nombre cienfitico, familia a la que pertence 
+# y si se encuentra en peligro de extincion (true-false)
+#Ademas se debe guardar informaion de cada animal que los zoos possen, como su numero de id, especie, sexo a;o nac, pais origen
+# y conteninente
+
+create database ZoosDatabase;
+
+use ZoosDatabase;
+
+
+create table Paises(
+	IdPais int primary key identity(1,1) not null,
+	NombrePais varchar(30) not null
+)
+
+create table Ciudades(
+	IdCiudad int primary key identity(1,1) not null,
+	NombreCiudad varchar(30) not null,
+	IdPais int not null,
+	CONSTRAINT FK_PAISES FOREIGN KEY (IdPais) REFERENCES Paises(IdPais)
+)
+
+create table Zoologicos(
+	IdZoologico int primary key identit(1,1) not null,
+	NombreZoologico varchar(30) not null,
+	constraint UK_NombresZoos unique(NombreZoologico),
+	IdCiudad int not null,
+	CONSTRAINT FK_Ciudades FOREIGN KEY (IdIcudad) REFERENCES Ciudades(IdCiudad)
+	DimensionEnMetrosCuadrados decimal(9,2) not null
+)
+
+
+#mariadb
+
+
+create table Empleados(
+	EmpleadoId varchar(15) primary key,
+	PrimerNombre varchar(30)  null,
+	SegundoNombre varchar(30)  null,
+	PrimerApellido varchar(30)  null,
+	SegundoApellido varchar(30)  null,
+	RTN varchar(30) null,
+	Observacion varchar(130) not null,
+	FechaNacimiento datetime not null
+);
+
+
+create table Usuarios(
+	UsuarioId varchar(15) primary key,
+	NombreUsuario varchar(30)  null,
+	Password varchar(30)  null,
+	EstaActivo int not null,
+	FechaRegistro datetime not null
+);
+
+
+create table Proveedores(
+	IdProveedor int auto_increment primary key,
+	NombreProveedor varchar(30) not null,
+	UbicacionProveedor varchar(30) not null,
+	IdPais int null
+);
+
+create table Direcciones(
+	IdDireccion int auto_increment primary key, 
+	UbicacionGeoespacial varchar(400) not null,
+	Direccion varchar(60) not null,
+	Calle varchar(300),
+	TipoProveedor ENUM('Proveedor', 'Cliente') null,
+	constraint IdProveedor foreign key references Proveedor(IdProveedor),
+	constraint Fk_DireccionProveedor  unique key Proveedores(IdProveedor)
+);
+
+
+
+create table Marcas(
+	MarcaId int auto_increment primary key,
+	NombreMarca varchar(30) not null,
+	EstaActivo int not null,
+	PaisMarca varchar(20) not null
+);
+
+
+
+
+create table Productos(
+	ProductoId int auto_increment primary key,
+	NombreProducto varchar(50) not null,
+	DescripcionProducto varchar(100) not null,
+	
+
+);
+
+#otro sql
+create database buffetAbogadosDatabase;
+
+use buffetAbogadosDatabase;
+
+
+create table Cliente(
+	Id_Cliente int primary key identity (1,1) not null default(1),
+	Nombres varchar (25) not null,
+	Apellidos varchar (25) not null,
+	N_identidad varchar (20) not null,
+	Direccion varchar (40) not null,
+	Telefono varchar (13) not null,
+	Correo varchar (30) not null
+)
+
+create table Abogado(
+Id_Abogado int primary key identity (1,1) not null,
+Nombres varchar (25) not null,
+Apellidos varchar (25) not null,
+Direccion varchar (40) not null,
+Telefono varchar (13) not null,
+Correo varchar (30) not null
+)
+
+create table casos(
+Id_Caso int primary key identity (1,1) not null,
+Id_cliente int not null,
+Periodo varchar (25) not null,
+Descripcion varchar (100) not null,
+Estado varchar (20) not null
+CONSTRAINT FK_Caso FOREIGN KEY (Id_cliente) REFERENCES Cliente(Id_Cliente)
+)
+
+CREATE TABLE Expedientes (
+Id_Expediente int primary key identity (1,1) not null,
+Id_Caso int not null,
+Id_Cliente int not null,
+Id_Abogado int  not null,
+Fecha_inicio date not null,
+Estado_caso varchar (20) not null,
+Obsevaciones varchar (50),
+
+CONSTRAINT FK_CasosE FOREIGN KEY (Id_Caso) REFERENCES Casos(Id_Caso),
+CONSTRAINT FK_ClienteE FOREIGN KEY (Id_Cliente) REFERENCES Cliente(Id_Cliente),
+CONSTRAINT FK_AbogadoE FOREIGN KEY (Id_cliente) REFERENCES Cliente(Id_Cliente)
+)
+
+
+
+
+INSERT INTO Cliente VALUES('ADA','REYES','1218-1980-04735','Barrio el eden juticalpa','34568789','ada@gmail.com')
+INSERT INTO Cliente VALUES('MARINA ALBERTA','MOLINA','1513-1978-73634','colonia solidaridad ','34589789','marina@gmail.com')
+INSERT INTO Cliente VALUES('EVA MARIA','ALVARES MERAZ','0801-1988-23897','barrio belen juticalpa ','34568789','eva@gmail.com')
+INSERT INTO Cliente VALUES('GLORIA','INESTROZA','1514-1989-01465','colonia los angeles juticalpa','34556789','gloria@gmail.com')
+INSERT INTO Cliente VALUES('JUAN','MORALES','1501-2000-03465','san juan pueblo','32368789','juanes@gamil.com')
+INSERT INTO Cliente VALUES('RAMON','CELESTINO','1514-1996-015637','Barrio el eden juticalpa','34568786','ramon@gmail.com')
+
+INSERT INTO Abogado VALUES('CELESTE','ROJAS','barrio los cocodrilos ','34590786','celeste@gmail.com')
+INSERT INTO Abogado VALUES('ELIZABET','MONCADA','colonia los robles','74508786','Elizabet@gmail.com')
+INSERT INTO Abogado VALUES('NAHOMI','HERRERA','colonia los prefesores','35668786','Nohemi@gmail.com')
+INSERT INTO Abogado VALUES('KIMBERLY','CASTRO','barrio la bolsa','67568786','Kimberly@gmail.com')
+INSERT INTO Abogado VALUES('LILIAN','INESTROZA','colonia las brisas ','34568786','Lilian@gmail.com')
+
+create proc InsertAbogado(
+	@nombres varchar(25),
+	@apellidos varchar(25),
+	@direccion varchar(40),
+	@telefono varchar(13),
+	@correo varchar(30)
+)as 
+begin 
+	insert into Abogado values(@nombres, @apellidos, @direccion, @telefono, @correo);	
+end
+
+
+create proc UpdateAbogado(
+	@id int,
+	@nombres varchar(25),
+	@apellidos varchar(25),
+	@direccion varchar(40),
+	@telefono varchar(13),
+	@correo varchar(30)
+)as
+begin
+	update Abogado set Nombres = @nombres, Apellidos = @apellidos,
+					Direccion = @direccion, Telefono = @telefono,
+					Correo = @correo
+	where Id_Abogado = @id;
+end
+
+create proc DeleteAbogado(
+	@id int
+)as
+begin
+	delete from Abogado where Id_Abogado = @id
+end
+
+create view 
+
+create view ClientesGabineteView
+as
+	select * from Cliente ;
+
+create view AbogadosGabineteView
+as
+	select * from Abogado ;
+
+create proc ObtenerNoAbogados
+as
+	declare @cantidad int = (select COUNT(*) from Cliente);
+	select @cantidad;
+
+
+
+create proc ObtenerUsuaariosPorEstado(
+	@estado int
+)as
+select * from casos where Estado = @estado;
+
+
+EXEC InsertAbogado 'hola', 'asdfa', 'asdfasdf', 'asfasd', 'asdff';
+
+#otro sql
+
+create proc clientes
+		@primerNombre varchar(30),
+		@segundoNombre varchar(30),
+		@primerApellido varchar(30),
+		@segundoApellido varchar(30),
+		@salida int output
+as
+begin
+	set @salida = (select count(Id) 
+	from clientes 
+	where nombre=@primerNombre);	
+end
+
+declare @sal int
+EXEC clientes 'Ana', 'Col. Eden', @sal OUTPUT 
+select @sal
+
+if object_id('clientes') it not null
+drop proc clientes
+else 
+select 'no existe'
+
+create proc insertInClientes
+@nombre varchar(20),
+@domicilio varchar(40)
+as
+if(@nombre is null) or (@domicilio is null)
+	return 0
+ELSE 
+	return 1;
+	
+
+declare @salida int
+EXEC @salida = clientes null, null 
+select @salida
+
+
+
+create function IdAbogados(@valor varchar(10)) returns varchar(10)
+as
+begin
+	declare @resultado varchar(10)
+
+set @resultado = (case len(@valor) when 1 then 'ab1' + @valor
+						when 2 then 'ab2' + @valor
+						when 3 then 'ab3' + @valor
+						else
+						@valor
+						end)
+return @resultado
+
+end
+
+
+create function IdClientes(@valor varchar(10)) returns varchar(10)
+as
+begin
+	declare @resultado varchar(10)
+	declare @model varchar(10) = 'CLIENT'
+set @resultado = (case len(@valor) when 1 then @model + @valor
+						when 2 then @model + @valor
+						when 3 then @model + @valor
+						else
+						@valor
+						end)
+return @resultado
+
+end
+
+
+
+use buffetAbogadosDatabase;
+
+select *, dbo.IdAbogados(Id_Abogado) as CodigoAbogado from dbo.Abogado ; 
+
+select *, dbo.IdClientes(Id_Cliente ) as CodigoCliente from dbo.Cliente ; 
+
+
+#fu
+create function InvertirPalabra(@palabra varchar(25) ) returns varchar(25)
+as
+begin
+	declare @nombreInvertido varchar(25) = (select reverse(@palabra));
+	
+	declare @nombreMayuscula varchar(25) = (select UPPER(@nombreInvertido));
+	return @nombreMayuscula;
+end
+
+
+select * , dbo.InvertirPalabra(Nombres) as [Nombre invertido] from dbo.Cliente where Nombres = 'juan';
+
+
+
+#ejercicio 2
+CREATE FUNCTION dbo.contarNumeros (
+
+      @StringList VARCHAR(MAX),
+
+      @Delimiter CHAR(1))
+
+ 
+
+RETURNS @TableList TABLE(ID int identity(1,1), StringLiteral VARCHAR(128))
+
+BEGIN
+
+      IF @StringList = '' RETURN
+
+      IF @Delimiter = ''
+
+      BEGIN
+
+         WITH Split AS
+
+        ( SELECT CharOne=LEFT(@StringList,1),R=RIGHT(@StringList,len(@StringList)-1)
+
+          UNION ALL
+
+          SELECT LEFT(R,1), R=RIGHT(R,len(R)-1)
+
+          FROM Split
+
+          WHERE LEN(R)>0  )
+
+        INSERT @TableList
+
+        SELECT CharOne FROM Split
+
+        OPTION ( MAXRECURSION 0)
+
+        RETURN
+
+      END -- IF
+
+      DECLARE @XML xml
+
+      SET @XML = '<root><csv>'+replace(@StringList,@Delimiter,'</csv><csv>')+
+
+                 '</csv></root>'
+
+      INSERT @TableList
+
+      SELECT rtrim(ltrim(replace(Word.value('.','nvarchar(128)'),char(10),'')))
+
+             AS ListMember
+
+      FROM @XML.nodes('/root/csv') AS WordList(Word)
+
+RETURN
+
+END 
+
+
+
+
+DECLARE @Number varchar(32)='1233';
+
+SELECT SumOfDigits = SUM(convert(int,StringLiteral)) 
+
+FROM dbo.contarNumeros (@Number,'')
+
+
+
+
+
+
+
+
+
+
+create function SumDigits(@value varchar(32)) returns varchar(32)
+as
+begin
+	declare @num varchar(32);
+	declare @c int = 0;
+	declare @lim varchar(32) = len(@value);
+	declare @total int;
+	while @c < @lim
+	
+	set @num = SUBSTRING(@value, @c, 1) 
+	set @total = @total + convert(int, @num)
+
+	set @c = @c + 1;
+return @total;
+end
+
+declare @d varchar(32) = dbo.SumDigits('123');
+
+select @d;
+
+
+#Triggers vamos crear nuevos triggers
+
+create trigger InsertData
+on Tabla
+for Evento(insert, update, delete)
+AS
+BEGIN 
+	en una tabla esta contando lsa unidades vendidas
+	un trigger actualizaria la tabla de unidades vendidas 
+	segundo trigger que actualice la cantidad de productos que hay en inventario
+END
+
+
+create trigger InsertVenta
+on Ventas
+for INSERT 
+AS 
+BEGIN 
+	declare @total int;
+
+	set @total = ()
+END
+
+
+create table Paises(
+	IdPais int primary key identity(1,1) not null,
+	NombrePais varchar(30) not null
+);
+
+
+
+
+#asfdasdfasdf
+
+
+
+
+
+
+
+
